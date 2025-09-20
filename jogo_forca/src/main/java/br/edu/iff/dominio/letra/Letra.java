@@ -1,9 +1,9 @@
 package br.edu.iff.dominio.letra;
 
 public abstract class Letra {
-    protected char codigo;
+    private char codigo;
 
-    public Letra(char codigo) {
+    protected Letra(char codigo) {
         this.codigo = codigo;
     }
 

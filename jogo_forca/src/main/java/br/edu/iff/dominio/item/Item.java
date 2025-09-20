@@ -14,7 +14,7 @@ public class Item {
     }
 
     public Letra getErrosEncontrados() {
-        // TODO implementar lógica
+        
         return null;
     }
 

@@ -1,14 +1,17 @@
 package br.edu.iff.dominio.palavra;
 
+import br.edu.iff.dominio.ObjetoDominioImpl;
 import br.edu.iff.dominio.letra.Letra;
 import br.edu.iff.dominio.letra.LetraFactory;
+import br.edu.iff.dominio.tema.Tema;
 
-public class Palavra {
+public class Palavra extends ObjetoDominioImpl {
     private String palavra;
     private Tema tema;
     private Letra[] letras;
 
-    public Palavra(String palavra, Tema tema, LetraFactory letraFactory) {
+    public Palavra(long id, String palavra, Tema tema, LetraFactory letraFactory) {
+        super(id);
         this.palavra = palavra.toLowerCase();
         this.tema = tema;
         this.letras = new Letra[palavra.length()];

@@ -1,10 +1,10 @@
 package br.edu.iff.dominio;
 
-public abstract class ObjetoDominiolmpl implements ObjetoDominio {
+public abstract class ObjetoDominioImpl implements ObjetoDominio {
 
     private long id;
 
-    public ObjetoDominiolmpl(long id) {
+    public ObjetoDominioImpl(long id) {
         this.id = id;
     }
 

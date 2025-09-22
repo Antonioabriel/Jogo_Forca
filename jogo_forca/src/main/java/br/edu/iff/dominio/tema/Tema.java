@@ -1,6 +1,6 @@
-import br.edu.iff.dominio.ObjetoDominiolmpl;
+import br.edu.iff.dominio.ObjetoDominioImpl;
 
-public class Tema extends ObjetoDominiolmpl {
+public class Tema extends ObjetoDominioImpl {
 
     private String nome;
 

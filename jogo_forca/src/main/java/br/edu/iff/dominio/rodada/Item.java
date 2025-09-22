@@ -1,14 +1,16 @@
-package br.edu.iff.dominio.item;
+package br.edu.iff.dominio.rodada;
 
+import br.edu.iff.dominio.ObjetoDominioImpl;
 import br.edu.iff.dominio.letra.Letra;
 import br.edu.iff.dominio.palavra.Palavra;
 
-public class Item {
+public class Item extends ObjetoDominioImpl{
     private boolean[] posicoesDescobertas;
     private String palavraArriscada = null;
     private Palavra palavra;
 
-    public Item(Palavra palavra) {
+    public Item(long id,Palavra palavra) {
+        super(id);
         this.palavra = palavra;
         this.posicoesDescobertas = new boolean[palavra.getPalavra().length()];
     }

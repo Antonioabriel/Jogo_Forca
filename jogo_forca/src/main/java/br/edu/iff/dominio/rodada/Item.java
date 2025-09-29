@@ -3,21 +3,35 @@ package br.edu.iff.dominio.rodada;
 import br.edu.iff.dominio.ObjetoDominioImpl;
 import br.edu.iff.dominio.letra.Letra;
 import br.edu.iff.dominio.palavra.Palavra;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Item extends ObjetoDominioImpl {
     private boolean[] posicoesDescobertas;
     private String palavraArriscada = null;
     private Palavra palavra;
 
+    static Item criar(long id, Palavra palavra) {
+        return new Item(id, palavra);
+    }
+
+    public static Item reconstituir(long id, Palavra palavra, boolean[] posicoesDescobertas, String palavraArriscada) {
+        return new Item(id, palavra, posicoesDescobertas, palavraArriscada);
+    }
+
     public Item(long id,Palavra palavra) {
         super(id);
         this.palavra = palavra;
+      //this.posicoesDescobertas = new boolean[palavra.getTamanho()];
+
     }
 
     public Item (long id, Palavra palavra, boolean[] posicoesDescobertas, String palavraArriscada) {
         super(id);
         this.palavra = palavra;
-        this.posicoesDescobertas = new boolean[palavra.getPalavra().length()];
+        this.posicoesDescobertas = posicoesDescobertas;
+        this.palavraArriscada = palavraArriscada;
     }
 
     public Palavra getPalavra() {
@@ -25,27 +39,33 @@ public class Item extends ObjetoDominioImpl {
     }   
 
     public Letra[] getLetrasDescobertas() {
-        String letras = "";
+        List<Letra> letrasDescobertas = new ArrayList<>();
         for (int i = 0; i < posicoesDescobertas.length; i++) {
-            if (posicoesDescobertas[i] == true)  {
-                letras += palavra.getLetra(i);
+            if (posicoesDescobertas[i]) {
+                letrasDescobertas.add(palavra.getLetra(i));
             }
         }
-        return letras;
+        return letrasDescobertas.toArray(new Letra[0]);
     }
 
     public Letra[] getLetrasEncobertas() {
-        String letras = "";
+        List<Letra> letrasEncobertas = new ArrayList<>();
         for (int i = 0; i < posicoesDescobertas.length; i++) {
-            if (posicoesDescobertas[i] == false)  {
-                letras += palavra.getLetra(i);
+            if (!posicoesDescobertas[i]) {
+                letrasEncobertas.add(palavra.getLetra(i));
             }
         }
-        return letras;
+        return letrasEncobertas.toArray(new Letra[0]);
     }
 
     public int qtdeLetrasEncobertas() {
-
+        int contador = 0;
+        for (boolean descoberta : posicoesDescobertas) {
+            if (!descoberta) {
+                contador++;
+            }
+        }
+        return contador;
     }
 
     public int calcularPontosLetrasEncobertas(int valorPorLetraEncoberta) {
@@ -54,41 +74,42 @@ public class Item extends ObjetoDominioImpl {
 
     public boolean descobriu() {
 
+        boolean arriscouEAcertou = arriscou() && acertou();
+
+        boolean naoTemLetrasEncobertas = qtdeLetrasEncobertas() == 0;
+
+        return arriscouEAcertou || naoTemLetrasEncobertas;
     }
 
     public void exibir(Object contexto) {
         palavra.exibir(contexto, posicoesDescobertas);
-    }
-
-    
-}
-
-    /*public Letra getErrosEncontrados() {
-        
-        return null;
-    }
-
-    public boolean[] getPosicoesDescobertas() {
-        return posicoesDescobertas;
     }
 
     public String getPalavraArriscada() {
         return palavraArriscada;
     }
 
-    public int getTamanhoPalavra() {
-        return palavra.getPalavra().length();
+    void tentar(char codigo) {
+        int[] posicoes = palavra.tentar(codigo);
+
+        for (int pos : posicoes) {
+            this.posicoesDescobertas[pos] = true;
+        }
     }
 
-    public void setPalavraArriscada(String palavraArriscada) {
-        this.palavraArriscada = palavraArriscada;
+    void arriscar(String palavra) {
+        this.palavraArriscada = palavra;
     }
 
-    public void exibir(Object contexto) {
-        palavra.exibir(contexto, posicoesDescobertas);
+    boolean arriscou() {
+        return this.palavraArriscada != null;
     }
 
-    public boolean acertou() {
-        return palavra.comparar(palavraArriscada);
+    boolean acertou() {
+        if (!arriscou()) {
+            return false;
+        }
+        return palavra.comparar(this.palavraArriscada);
     }
-} */
+}
+    

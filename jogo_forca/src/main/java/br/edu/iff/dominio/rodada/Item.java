@@ -35,7 +35,7 @@ public class Item extends ObjetoDominioImpl {
     }
 
     public Palavra getPalavra() {
-        return palavra;
+        return this.palavra;
     }   
 
     public Letra[] getLetrasDescobertas() {

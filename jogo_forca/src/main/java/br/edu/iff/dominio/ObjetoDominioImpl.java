@@ -5,6 +5,7 @@ public abstract class ObjetoDominioImpl implements ObjetoDominio {
     private long id;
 
     public ObjetoDominioImpl(long id) {
+        super();
         this.id = id;
     }
 
